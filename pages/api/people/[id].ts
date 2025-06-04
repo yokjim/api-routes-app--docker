@@ -6,9 +6,9 @@ export default function personHandler(
   req: NextApiRequest,
   res: NextApiResponse<Person | ResponseError>
 ) {
-  const { query } = req
-  const { id } = query
-  const person = people.find((p) => p.id === id)
+  const { id } = req.query
+  const personId = Array.isArray(id) ? id[0] : id
+  const person = people.find((p) => p.id === personId)
 
   // User with id exists
   return person
