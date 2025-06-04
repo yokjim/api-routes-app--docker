@@ -17,7 +17,10 @@ export default function PersonPage() {
   const { data, error, isLoading, isValidating } = useSWR<
     Person,
     ResponseError
-  >(() => (query.id ? `/api/people/${query.id}` : null), fetcher)
+  >(() => {
+    const id = Array.isArray(query.id) ? query.id[0] : query.id
+    return id ? `/api/people/${id}` : null
+  }, fetcher)
 
   if (error) return <div>{error.message}</div>
   if (isLoading) return <div>Loading...</div>
